@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Checkbox
@@ -55,20 +56,12 @@ fun ListPage(viewModel: RecipeViewModel = viewModel()) {
         }
     }
     else {
-        Box(
-            modifier = Modifier.fillMaxSize().padding(16.dp)
-        ) {
-            Spacer(Modifier.size(40.dp))
-        }
-        Surface(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(10.dp)
-        ) {
-            LazyColumn {
-                items(savedRecipes) { recipe ->
-                    IngredientList(recipe.extendedIngredients.toList())
-                }
+        LazyColumn (
+            modifier = Modifier.padding(start = 10.dp, top = 60.dp, bottom = 30.dp)
+        ){
+            items(savedRecipes) { recipe ->
+                Box(Modifier.background(Color.LightGray).height(30.dp).width(390.dp)) {Text(recipe.title, color = Color.Black, modifier = Modifier.padding(5.dp))}
+                IngredientList(recipe.extendedIngredients.toList())
             }
         }
     }
@@ -85,20 +78,24 @@ fun DisplayIngredient(ingredient: Ingredient) {
             verticalAlignment = Alignment.Top
         ) {
             Checkbox(
+                modifier = Modifier.align(Alignment.CenterVertically),
                 checked = checked,
                 onCheckedChange = { checked = it }
             )
-            Text(ingredient.name)
-            Text(ingredient.amount.toString() + " " + ingredient.unit)
+            Text(ingredient.name + " ", modifier = Modifier.align(Alignment.CenterVertically))
+            Text("(" + ingredient.amount.toString() + " " + ingredient.unit + ")", modifier = Modifier.align(Alignment.CenterVertically))
         }
     }
 }
 
 @Composable
 fun IngredientList(ingredientList: List<Ingredient>) {
-    LazyColumn(modifier = Modifier.height(100.dp)) {
-        items(ingredientList) { ingredient ->
-            DisplayIngredient(ingredient)
-        }
+//    LazyColumn(modifier = Modifier.height(100.dp)) {
+//        items(ingredientList) { ingredient ->
+//            DisplayIngredient(ingredient)
+//        }
+//    }
+    for(i in 0..<ingredientList.size) {
+        DisplayIngredient(ingredientList[i])
     }
 }

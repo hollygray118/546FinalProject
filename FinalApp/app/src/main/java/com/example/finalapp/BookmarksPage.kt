@@ -1,13 +1,16 @@
 package com.example.finalapp
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,25 +24,32 @@ import coil.compose.AsyncImage
 
 @Composable
 fun BookmarksPage() {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.DarkGray)
+            .height(50.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = "Bookmarks Screen",
+            color = Color.White,
+        )
+    }
     if(savedRecipes.isNotEmpty())
     {
-        val recipe = savedRecipes[0]
-        Column(
-            modifier = Modifier.fillMaxSize().padding(16.dp),
+        LazyColumn(
+            modifier = Modifier.fillMaxSize().padding(16.dp).padding(top = 40.dp).padding(bottom = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            AsyncImage(
-                model = recipe.image,
-                contentDescription = "Recipe Image",
-                )
-            Text(
-                text = recipe.title,
-                fontSize = 16.sp,
-                color = Color.DarkGray
-            )
-            Button(onClick = { whenUnBookmarkButtonClicked(recipe) }) { Text("UnBookmark Recipe")}
-            Spacer(modifier = Modifier.height(16.dp))
+            for(i in 0..<savedRecipes.size)
+            {
+                item {
+                    DisplayBookmarkedRecipe(savedRecipes[i])
+                }
+            }
         }
     }
     else {
@@ -53,10 +63,6 @@ fun BookmarksPage() {
             )
         }
     }
-}
-
-fun whenUnBookmarkButtonClicked(r: Recipe) {
-    unBookmarkRecipe(r)
 }
 
 

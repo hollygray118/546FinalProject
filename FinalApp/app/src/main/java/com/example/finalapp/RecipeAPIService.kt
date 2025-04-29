@@ -7,11 +7,11 @@ import retrofit2.http.GET
 import retrofit2.http.Headers
 
 interface RecipeAPIService {
-    @GET("/recipes/random?number=4&apiKey=0da4bd39e94148f5a75127289fb5cc64")
+    @GET("/recipes/random?number=10&apiKey=0da4bd39e94148f5a75127289fb5cc64")
     suspend fun getRandomRecipe(): RandomRecipeResponse
 }
 
-data class RandomRecipeResponse(@SerializedName("recipes") val recipes: Array<Recipe>) {
+data class RandomRecipeResponse(@SerializedName("recipes") val recipes: Array<Recipe?>) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

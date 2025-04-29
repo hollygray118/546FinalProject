@@ -21,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
+val numResults = 20
+
 @Composable
 fun SearchPage() {
     Column(
@@ -44,4 +46,10 @@ fun SearchPage() {
         label = { Text("Search") }
     )
     printSearchResults(search)
+}
+
+fun printSearchResults(search: String) {
+    for(i in 0..<numResults) {
+
+    }
 }

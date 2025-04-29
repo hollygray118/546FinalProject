@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class RecipeViewModel : ViewModel() {
-    private val _recipe = MutableStateFlow<Recipe?>(null)
-    val recipe: StateFlow<Recipe?> = _recipe
+    private val _recipes = MutableStateFlow<Array<Recipe?>>(emptyArray())
+    val recipes: StateFlow<Array<Recipe?>> = _recipes
 
     private val _loading = MutableStateFlow(false)
     val loading: StateFlow<Boolean> = _loading
@@ -26,7 +26,7 @@ class RecipeViewModel : ViewModel() {
             _error.value = null
             try {
                 val response = RetrofitInstance.api.getRandomRecipe()
-                _recipe.value = response.recipes[0]
+                _recipes.value = response.recipes
             } catch (e: Exception) {
                 _error.value = "Failed to load recipe: ${e.message}"
             }

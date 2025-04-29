@@ -28,11 +28,11 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
 
-private val numRecipes = 4
+private val numRecipes = 9
 
 @Composable
 fun HomePage(viewModel: RecipeViewModel = viewModel()) {
-    val recipe by viewModel.recipe.collectAsState()
+    val recipe by viewModel.recipes.collectAsState()
     val loading by viewModel.loading.collectAsState()
     val error by viewModel.error.collectAsState()
     Column(
@@ -50,15 +50,15 @@ fun HomePage(viewModel: RecipeViewModel = viewModel()) {
     }
 
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier.fillMaxSize().padding(16.dp).padding(top = 60.dp).padding(bottom = 40.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        for(i in 1..numRecipes)
+        for(i in 0..numRecipes)
         {
-            if(recipe != null) {
+            if(recipe.isNotEmpty()) {
                 item {
-                    DisplayRecipe(recipe!!)
+                    DisplayUnbookMarkedRecipe(recipe[i]!!)
                 }
             }
         }
@@ -66,7 +66,7 @@ fun HomePage(viewModel: RecipeViewModel = viewModel()) {
 }
 
 @Composable
-fun DisplayRecipe(recipe: Recipe) {
+public fun DisplayUnbookMarkedRecipe(recipe: Recipe) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -89,11 +89,11 @@ fun DisplayRecipe(recipe: Recipe) {
                 text = recipe.title,
                 fontSize = 16.sp,
                 color = Color.Black,
-
                 style = TextStyle.Default.copy(lineBreak = LineBreak.Heading),
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(10.dp)
+                    .padding(end = 10.dp)
             )
         }
         Spacer(modifier = Modifier.height(16.dp))
@@ -107,7 +107,7 @@ fun DisplayRecipe(recipe: Recipe) {
             var display = false
             ElevatedButton(onClick = { display = true}) { Text("View Recipe", fontSize = 12.sp, color = Color.DarkGray)}
             if(display) {
-                ViewRecipe(recipe)
+                ViewRecipeInfo(recipe)
             }
         }
         Box(
@@ -124,19 +124,62 @@ fun DisplayRecipe(recipe: Recipe) {
 }
 
 @Composable
-fun ViewRecipe(r: Recipe) {
-    Column(
+public fun DisplayBookmarkedRecipe(recipe: Recipe) {
+    Box(
         modifier = Modifier
-            .fillMaxSize().padding(16.dp)
-            .background(Color.LightGray),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+            .fillMaxWidth()
+            .height(160.dp)
+            .background(Color.LightGray)
     ) {
-
+        AsyncImage(
+            model = recipe.image,
+            contentDescription = "Recipe Image",
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .padding(10.dp)
+                .border(2.dp, Color.DarkGray, RectangleShape)
+        )
+        Box(
+            modifier = Modifier
+                .size(180.dp)
+        ) {
+            Text(
+                text = recipe.title,
+                fontSize = 16.sp,
+                color = Color.Black,
+                style = TextStyle.Default.copy(lineBreak = LineBreak.Heading),
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(10.dp)
+                    .padding(end = 10.dp)
+            )
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(horizontal = 10.dp)
+                .padding(vertical = 45.dp)
+                .height(30.dp)
+        ) {
+            var display = false
+            ElevatedButton(onClick = { display = true}) { Text("View Recipe", fontSize = 12.sp, color = Color.DarkGray)}
+            if(display) {
+                ViewRecipeInfo(recipe)
+            }
+        }
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(10.dp)
+                .height(30.dp)
+        ) {
+            ElevatedButton(onClick = { unBookmarkRecipe(recipe)}) { Text("Remove Recipe", fontSize = 12.sp, color = Color.DarkGray)}
+        }
+        Spacer(modifier = Modifier.height(16.dp))
     }
+    Spacer(modifier = Modifier.height(16.dp))
 }
-
-
 
 
 
