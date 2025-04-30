@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
+import kotlin.system.exitProcess
 
 private val numRecipes = 9
 
@@ -105,10 +106,11 @@ public fun DisplayUnbookMarkedRecipe(recipe: Recipe) {
                 .height(30.dp)
         ) {
             var display = false
-            ElevatedButton(onClick = { display = true}) { Text("View Recipe", fontSize = 12.sp, color = Color.DarkGray)}
-            if(display) {
-                ViewRecipeInfo(recipe)
-            }
+//            ElevatedButton(onClick = { display = true}) { Text("View Ingredients", fontSize = 12.sp, color = Color.DarkGray)}
+//            while(display) {
+//                IngredientList(recipe.extendedIngredients.toList())
+//                display = false
+//            }
         }
         Box(
             modifier = Modifier
@@ -163,10 +165,13 @@ public fun DisplayBookmarkedRecipe(recipe: Recipe) {
                 .height(30.dp)
         ) {
             var display = false
-            ElevatedButton(onClick = { display = true}) { Text("View Recipe", fontSize = 12.sp, color = Color.DarkGray)}
-            if(display) {
-                ViewRecipeInfo(recipe)
-            }
+//            ElevatedButton(onClick = { display = true}) { Text("View Ingredients", fontSize = 12.sp, color = Color.DarkGray)}
+//            if(display) {
+//                Column() {
+//                    IngredientList(recipe.extendedIngredients.toList())
+//                }
+//                display = false
+//            }
         }
         Box(
             modifier = Modifier
@@ -180,14 +185,3 @@ public fun DisplayBookmarkedRecipe(recipe: Recipe) {
     }
     Spacer(modifier = Modifier.height(16.dp))
 }
-
-
-
-
-
-
-
-
-
-
-

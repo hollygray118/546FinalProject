@@ -7,6 +7,7 @@ data class Recipe(
     @SerializedName("image") val image: String,
     @SerializedName("summary") val summary: String,
     @SerializedName("extendedIngredients") val extendedIngredients: Array<Ingredient>,
+    @SerializedName("servings") val servings: Int,
     val bookmarked: Boolean
 ) {
     override fun equals(other: Any?): Boolean {

@@ -35,7 +35,7 @@ fun SettingsPage()
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 55.dp)
-            .height(100.dp),
+            .height(150.dp),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Center
     ) {
@@ -46,7 +46,7 @@ fun SettingsPage()
             fontSize = 20.sp
         )
         Text(
-            text = "\nThis app was designed and developed by Holly Gray for CSCE 546, Mobile Application Development, at the University of South Carolina.",
+            text = "\nThis app was designed and developed by Holly Gray for CSCE 546, Mobile Application Development, at the University of South Carolina.\nThe app heavily utilizes the Spoonacular API.",
             color = Color.DarkGray
         )
     }
